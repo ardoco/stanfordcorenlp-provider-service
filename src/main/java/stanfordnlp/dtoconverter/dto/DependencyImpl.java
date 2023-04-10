@@ -1,16 +1,16 @@
 /* Licensed under MIT 2023. */
-package stanfordnlp.corenlp;
+package stanfordnlp.dtoconverter.dto;
 
-import stanfordnlp.dto.DependencyType;
+import edu.kit.kastel.mcse.ardoco.core.api.data.text.DependencyTag;
 
 import java.util.Objects;
 
 public class DependencyImpl {
 
-    private final DependencyType dependencyType;
+    private final DependencyTag dependencyType;
     private final long wordId;
 
-    public DependencyImpl(DependencyType type, long wordId) {
+    public DependencyImpl(DependencyTag type, long wordId) {
         this.dependencyType = type;
         this.wordId = wordId;
     }
@@ -19,7 +19,7 @@ public class DependencyImpl {
         return wordId;
     }
 
-    public DependencyType getDependencyType() {
+    public DependencyTag getDependencyTag() {
         return dependencyType;
     }
 
