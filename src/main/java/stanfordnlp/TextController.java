@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 public class TextController {
 
     @GetMapping ("/stanfordnlp")
-    public TextDTO texting(@RequestParam(defaultValue = "I like you.") String text) {
+    public TextDTO texting(@RequestParam(defaultValue = "The quick brown fox jumped over the lazy dog.") String text) {
         InputStream inputStream = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
         Text annotatedText = processText(inputStream);
         return convertToDto(annotatedText);

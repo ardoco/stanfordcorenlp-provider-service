@@ -11,6 +11,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 import java.util.Scanner;
 
+
+/**
+ * Copied from <a href="https://github.com/ArDoCo/Core/blob/783f3388617158b0da0a8f43d6cb8e20041f4a09/text-provider/src/main/java/edu/kit/kastel/mcse/ardoco/core/text/providers/corenlp/CoreNLPProvider.java">...</a>
+ * since a DataRepository was not needed.
+ */
 public class CoreNLPProvider {
     private static final String ANNOTATORS = "tokenize,ssplit,pos,parse,depparse,lemma"; // further: ",ner,coref"
     private static final String DEPENDENCIES_ANNOTATION = "EnhancedPlusPlusDependenciesAnnotation";

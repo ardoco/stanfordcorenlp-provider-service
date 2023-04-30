@@ -17,6 +17,10 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * copied from <a href="https://github.com/ArDoCo/Core/blob/783f3388617158b0da0a8f43d6cb8e20041f4a09/text-provider/src/main/java/edu/kit/kastel/mcse/ardoco/core/text/providers/corenlp/SentenceImpl.java">...</a>
+ * since TextImpl was not public and minor adjustments were necessary.
+ */
 class SentenceImpl implements Sentence {
     private static final Logger logger = LoggerFactory.getLogger(SentenceImpl.class);
 

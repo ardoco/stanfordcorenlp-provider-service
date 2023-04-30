@@ -9,6 +9,10 @@ import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 
+/**
+ * copied from <a href="https://github.com/ArDoCo/Core/blob/783f3388617158b0da0a8f43d6cb8e20041f4a09/text-provider/src/main/java/edu/kit/kastel/mcse/ardoco/core/text/providers/corenlp/TextImpl.java">...</a>
+ * since TextImpl was not public and minor adjustments were necessary.
+ */
 public class TextImpl implements Text {
 
     final CoreDocument coreDocument;

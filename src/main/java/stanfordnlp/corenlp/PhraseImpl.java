@@ -15,6 +15,10 @@ import org.eclipse.collections.api.map.MutableMap;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * copied from <a href="https://github.com/ArDoCo/Core/blob/783f3388617158b0da0a8f43d6cb8e20041f4a09/text-provider/src/main/java/edu/kit/kastel/mcse/ardoco/core/text/providers/corenlp/PhraseImpl.java">...</a>
+ * since TextImpl was not public and minor adjustments were necessary.
+ */
 public class PhraseImpl implements Phrase {
     private final Tree tree;
     private final ImmutableList<Word> words;
