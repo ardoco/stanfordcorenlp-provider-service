@@ -52,6 +52,11 @@
             <artifactId>eclipse-collections</artifactId>
             <version>8.2.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.ardoco</groupId>
+            <artifactId>text-provider-json</artifactId>
+            <version>0.0.2</version>
+        </dependency>
     </dependencies>
 
     <build>
