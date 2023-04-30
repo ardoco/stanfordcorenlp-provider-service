@@ -12,6 +12,7 @@ import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
 import org.eclipse.collections.api.map.MutableMap;
 
+import java.util.List;
 import java.util.Objects;
 
 public class PhraseImpl implements Phrase {
@@ -63,6 +64,13 @@ public class PhraseImpl implements Phrase {
             }
         }
         return subPhrases.toImmutable();
+    }
+
+    public ImmutableList<Phrase> getChildPhrases() {
+        List<Tree> childTrees = tree.getChildrenAsList();
+        List<PhraseImpl> childPhrases = childTrees.stream()
+                .filter(Tree::isPhrasal).map(x -> new PhraseImpl(x, Lists.immutable.withAll(parent.getWordsForPhrase(x)), parent)).toList();
+        return Lists.immutable.withAll(childPhrases);
     }
 
     @Override

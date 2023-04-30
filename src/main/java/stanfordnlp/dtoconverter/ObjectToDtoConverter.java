@@ -2,9 +2,9 @@
 package stanfordnlp.dtoconverter;
 
 import edu.kit.kastel.mcse.ardoco.core.api.data.text.*;
-import stanfordnlp.dtoconverter.dto.*;
-import stanfordnlp.dtoconverter.dto.DependencyImpl;
 import org.eclipse.collections.api.list.ImmutableList;
+import stanfordnlp.corenlp.PhraseImpl;
+import stanfordnlp.dtoconverter.dto.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,7 +13,6 @@ import java.util.List;
 
 public class ObjectToDtoConverter {
 
-    private static final String TREE_ROOT = "ROOT";
     private static final String TREE_SEPARATOR = " ";
     private static final char TREE_OPEN_BRACKET = '(';
     private static final char TREE_CLOSE_BRACKET = ')';
@@ -41,7 +40,9 @@ public class ObjectToDtoConverter {
         sentenceDTO.setText(sentence.getText());
         List<WordDTO> words = generateWordDTOs(sentence.getWords());
         sentenceDTO.setWords(words);
-        String tree = convertToConstituencyTree(sentence.getPhrases());
+
+        Phrase rootPhrase = sentence.getPhrases().get(0);
+        String tree = convertToConstituencyTrees(rootPhrase);
         sentenceDTO.setConstituencyTree(tree);
         return sentenceDTO;
     }
@@ -76,42 +77,31 @@ public class ObjectToDtoConverter {
         return wordDTO;
     }
 
-    private String convertToConstituencyTree(ImmutableList<Phrase> phrases) {
-        List<String> trees = phrases.toList().stream().map(this::convertToSubtree).toList();
-        StringBuilder constituencyTree = new StringBuilder(TREE_OPEN_BRACKET + TREE_ROOT);
-        for (String tree : trees) {
-            constituencyTree.append(TREE_SEPARATOR).append(tree);
-        }
-        constituencyTree.append(TREE_CLOSE_BRACKET);
-        return constituencyTree.toString();
+    private String convertToConstituencyTrees(Phrase rootPhrase) {
+        return convertToSubtree(rootPhrase, rootPhrase.getContainedWords().toList());
     }
 
-    private String convertToSubtree(Phrase phrase) {
+    private String convertToSubtree(Phrase phrase, List<Word> words) {
         StringBuilder constituencyTree = new StringBuilder().append(TREE_OPEN_BRACKET);
         constituencyTree.append(phrase.getPhraseType().toString());
-        List<Phrase> subphrases = new ArrayList<>(phrase.getSubPhrases().castToList());
-        List<Word> words = new ArrayList<>(phrase.getContainedWords().castToList());
+        List<Phrase> subphrases = new ArrayList<>(((PhraseImpl)phrase).getChildPhrases().castToList());
         // since we don't know the order of words and subphrases we have to reconstruct the order by comparing the word index
-        while (!subphrases.isEmpty() || !words.isEmpty()) {
+        while (!words.isEmpty()) {
             if (subphrases.isEmpty()) {
                 // word next
                 Word word = words.remove(0);
                 constituencyTree.append(TREE_SEPARATOR).append(convertWordToTree(word));
-            } else if (words.isEmpty()) {
-                // phrase next
-                Phrase subphrase = subphrases.remove(0);
-                constituencyTree.append(TREE_SEPARATOR).append(convertToSubtree(subphrase));
             } else {
                 int wordIndex = words.get(0).getPosition();
                 List<Integer> phraseWordIndices = subphrases.get(0).getContainedWords().toList().stream().map(Word::getPosition).toList();
-                if (wordIndex < Collections.max(phraseWordIndices)) {
+                if (wordIndex < Collections.min(phraseWordIndices)) {
                     // word next
                     Word word = words.remove(0);
                     constituencyTree.append(TREE_SEPARATOR).append(convertWordToTree(word));
                 } else {
                     // phrase next
                     Phrase subphrase = subphrases.remove(0);
-                    constituencyTree.append(TREE_SEPARATOR).append(convertToSubtree(subphrase));
+                    constituencyTree.append(TREE_SEPARATOR).append(convertToSubtree(subphrase, words));
                 }
             }
         }

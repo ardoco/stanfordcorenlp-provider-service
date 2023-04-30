@@ -6,7 +6,6 @@ import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import stanfordnlp.corenlp.TextImpl;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
@@ -20,11 +19,6 @@ public class CoreNLPProvider {
     @SuppressWarnings("unused")
     public CoreNLPProvider() {
     }
-
-//    public static void main(String[] args) {
-//        String text = "hello";
-//        new CoreNLPProvider().processText(new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8)));
-//    }
 
     public Text processText(InputStream text) {
         String inputText = readInputText(text);
