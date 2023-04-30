@@ -2,9 +2,10 @@
 package stanfordnlp.dtoconverter;
 
 import edu.kit.kastel.mcse.ardoco.core.api.data.text.*;
+import io.github.ardoco.textproviderjson.dto.*;
+import io.github.ardoco.textproviderjson.textobject.DependencyImpl;
 import org.eclipse.collections.api.list.ImmutableList;
 import stanfordnlp.corenlp.PhraseImpl;
-import stanfordnlp.dtoconverter.dto.*;
 
 import java.io.IOException;
 import java.util.ArrayList;

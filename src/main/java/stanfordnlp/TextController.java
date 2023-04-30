@@ -1,11 +1,11 @@
 package stanfordnlp;
 
 import edu.kit.kastel.mcse.ardoco.core.api.data.text.Text;
+import io.github.ardoco.textproviderjson.dto.TextDTO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import stanfordnlp.dtoconverter.ObjectToDtoConverter;
-import stanfordnlp.dtoconverter.dto.TextDTO;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
