@@ -5,12 +5,14 @@ import edu.kit.kastel.mcse.ardoco.core.api.data.text.*;
 import io.github.ardoco.textproviderjson.dto.*;
 import io.github.ardoco.textproviderjson.textobject.DependencyImpl;
 import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.list.MutableList;
 import stanfordnlp.corenlp.PhraseImpl;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ObjectToDtoConverter {
 
@@ -79,19 +81,24 @@ public class ObjectToDtoConverter {
     }
 
     private String convertToConstituencyTrees(Phrase rootPhrase) {
-        return convertToSubtree(rootPhrase, rootPhrase.getContainedWords().toList());
+        return convertToSubtree(rootPhrase);
     }
 
-    private String convertToSubtree(Phrase phrase, List<Word> words) {
+    private String convertToSubtree(Phrase phrase) {
+        List<Word> words = phrase.getContainedWords().toList().stream().filter(x -> x.getPhrase().equals(phrase)).collect(Collectors.toList());
         StringBuilder constituencyTree = new StringBuilder().append(TREE_OPEN_BRACKET);
         constituencyTree.append(phrase.getPhraseType().toString());
         List<Phrase> subphrases = new ArrayList<>(((PhraseImpl)phrase).getChildPhrases().castToList());
         // since we don't know the order of words and subphrases we have to reconstruct the order by comparing the word index
-        while (!words.isEmpty()) {
+        while (!words.isEmpty() || !subphrases.isEmpty()) {
             if (subphrases.isEmpty()) {
                 // word next
                 Word word = words.remove(0);
                 constituencyTree.append(TREE_SEPARATOR).append(convertWordToTree(word));
+            } else if (words.isEmpty()) {
+                // phrase next
+                Phrase subphrase = subphrases.remove(0);
+                constituencyTree.append(TREE_SEPARATOR).append(convertToSubtree(subphrase));
             } else {
                 int wordIndex = words.get(0).getPosition();
                 List<Integer> phraseWordIndices = subphrases.get(0).getContainedWords().toList().stream().map(Word::getPosition).toList();
@@ -102,7 +109,7 @@ public class ObjectToDtoConverter {
                 } else {
                     // phrase next
                     Phrase subphrase = subphrases.remove(0);
-                    constituencyTree.append(TREE_SEPARATOR).append(convertToSubtree(subphrase, words));
+                    constituencyTree.append(TREE_SEPARATOR).append(convertToSubtree(subphrase));
                 }
             }
         }

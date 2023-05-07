@@ -60,11 +60,11 @@ class WordImpl implements Word {
     }
 
     private Phrase loadPhrase() {
-        var currentPhrase = getSentence().getPhrases().stream().filter(p -> p.getContainedWords().contains(this)).findFirst().orElseThrow();
+        var currentPhrase = getSentence().getPhrases().toList().stream().filter(p -> p.getContainedWords().contains(this)).findFirst().orElseThrow();
         var subPhrases = List.of(currentPhrase);
         while (!subPhrases.isEmpty()) {
             currentPhrase = subPhrases.get(0);
-            subPhrases = currentPhrase.getSubPhrases().stream().filter(p -> p.getContainedWords().contains(this)).toList();
+            subPhrases = currentPhrase.getSubPhrases().toList().stream().filter(p -> p.getContainedWords().contains(this)).toList();
         }
         return currentPhrase;
     }
