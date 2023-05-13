@@ -20,11 +20,11 @@ public class CoreNLPProvider {
     private static final String ANNOTATORS = "tokenize,ssplit,pos,parse,depparse,lemma"; // further: ",ner,coref"
     private static final String DEPENDENCIES_ANNOTATION = "EnhancedPlusPlusDependenciesAnnotation";
 
-    // Needed for Configuration Generation
-    @SuppressWarnings("unused")
-    public CoreNLPProvider() {
-    }
-
+    /**
+     * analyses and annotates the given text and returns the result.
+     * @param text  the text
+     * @return      the annotated text
+     */
     public Text processText(InputStream text) {
         String inputText = readInputText(text);
         Properties props = getStanfordProperties();

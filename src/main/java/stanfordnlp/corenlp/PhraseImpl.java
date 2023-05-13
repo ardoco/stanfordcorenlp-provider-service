@@ -70,6 +70,10 @@ public class PhraseImpl implements Phrase {
         return subPhrases.toImmutable();
     }
 
+    /**
+     * Returns only those subphrases that are a direct child of this parent phrase.
+     * @return  the child phrases
+     */
     public ImmutableList<Phrase> getChildPhrases() {
         List<Tree> childTrees = tree.getChildrenAsList();
         List<PhraseImpl> childPhrases = childTrees.stream()
