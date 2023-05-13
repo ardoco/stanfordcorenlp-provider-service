@@ -5,7 +5,6 @@ import edu.kit.kastel.mcse.ardoco.core.api.data.text.*;
 import io.github.ardoco.textproviderjson.dto.*;
 import io.github.ardoco.textproviderjson.textobject.DependencyImpl;
 import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.api.list.MutableList;
 import stanfordnlp.corenlp.PhraseImpl;
 
 import java.io.IOException;
@@ -39,7 +38,7 @@ public class ObjectToDtoConverter {
 
     private SentenceDTO convertToSentenceDTO(Sentence sentence) {
         SentenceDTO sentenceDTO = new SentenceDTO();
-        sentenceDTO.setSentenceNo(sentence.getSentenceNumber());
+        sentenceDTO.setSentenceNo(sentence.getSentenceNumber() + (long) 1);
         sentenceDTO.setText(sentence.getText());
         List<WordDTO> words = generateWordDTOs(sentence.getWords());
         sentenceDTO.setWords(words);
@@ -56,7 +55,7 @@ public class ObjectToDtoConverter {
 
     private WordDTO convertToWordDTO(Word word) {
         WordDTO wordDTO = new WordDTO();
-        wordDTO.setId(word.getPosition());
+        wordDTO.setId(word.getPosition() + (long) 1);
         wordDTO.setText(word.getText());
         wordDTO.setLemma(word.getLemma());
         try {
@@ -64,7 +63,7 @@ public class ObjectToDtoConverter {
         } catch (IOException e) {
             return null;
         }
-        wordDTO.setSentenceNo(word.getSentenceNo());
+        wordDTO.setSentenceNo(word.getSentenceNo() + (long) 1);
         List<DependencyImpl> inDep = new ArrayList<>();
         List<DependencyImpl> outDep = new ArrayList<>();
         for (DependencyTag depType : DependencyTag.values()) {
@@ -132,14 +131,14 @@ public class ObjectToDtoConverter {
     private IncomingDependencyDTO convertToDepInDTO(DependencyImpl dependency) {
         IncomingDependencyDTO dependencyDTO = new IncomingDependencyDTO();
         dependencyDTO.setDependencyTag(dependency.getDependencyTag());
-        dependencyDTO.setSourceWordId(dependency.getWordId());
+        dependencyDTO.setSourceWordId(dependency.getWordId() + 1);
         return dependencyDTO;
     }
 
     private OutgoingDependencyDTO convertToDepOutDTO(DependencyImpl dependency) {
         OutgoingDependencyDTO dependencyDTO = new OutgoingDependencyDTO();
         dependencyDTO.setDependencyTag(dependency.getDependencyTag());
-        dependencyDTO.setTargetWordId(dependency.getWordId());
+        dependencyDTO.setTargetWordId(dependency.getWordId() + 1);
         return dependencyDTO;
     }
 }
