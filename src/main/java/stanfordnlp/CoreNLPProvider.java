@@ -1,7 +1,7 @@
 /* Licensed under MIT 2022. */
 package stanfordnlp;
 
-import edu.kit.kastel.mcse.ardoco.core.api.data.text.Text;
+import edu.kit.kastel.mcse.ardoco.core.api.text.Text;
 import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import stanfordnlp.corenlp.TextImpl;

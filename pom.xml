@@ -40,7 +40,7 @@
         <dependency>
             <groupId>io.github.ardoco.core</groupId>
             <artifactId>common</artifactId>
-            <version>0.7.0</version>
+            <version>0.10.0</version>
         </dependency>
         <dependency>
             <groupId>io.github.ardoco.core</groupId>
@@ -55,7 +55,7 @@
         <dependency>
             <groupId>io.github.ardoco</groupId>
             <artifactId>text-provider-json</artifactId>
-            <version>0.0.2</version>
+            <version>0.1.0</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

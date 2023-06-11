@@ -1,7 +1,7 @@
 /* Licensed under MIT 2022. */
 package stanfordnlp.corenlp;
 
-import edu.kit.kastel.mcse.ardoco.core.api.data.text.*;
+import edu.kit.kastel.mcse.ardoco.core.api.text.*;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.semgraph.SemanticGraph;
