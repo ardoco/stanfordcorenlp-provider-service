@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -54,13 +53,9 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public UserDetailsManager userDetailsService(PasswordEncoder bCryptPasswordEncoder) {
+    public UserDetailsManager userDetailsService() {
         JdbcUserDetailsManager manager = new JdbcUserDetailsManager();
         manager.setDataSource(datasource);
-//        manager.createUser(User.withUsername("user")
-//                .password(bCryptPasswordEncoder.encode("password"))
-//                .roles("USER")
-//                .build());
         return manager;
     }
 
