@@ -1,10 +1,9 @@
 /* Licensed under MIT 2022. */
-package stanfordnlp;
+package stanfordnlp.corenlp;
 
 import edu.kit.kastel.mcse.ardoco.core.api.text.Text;
 import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
-import stanfordnlp.corenlp.TextImpl;
 
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;

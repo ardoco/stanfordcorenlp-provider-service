@@ -1,4 +1,4 @@
-package stanfordnlp;
+package stanfordnlp.corenlp;
 
 import edu.kit.kastel.mcse.ardoco.core.api.text.Text;
 import io.github.ardoco.textproviderjson.converter.ObjectToDtoConverter;
