@@ -1,101 +1,80 @@
 package stanfordnlp;
 
-import edu.kit.kastel.mcse.ardoco.core.api.text.DependencyTag;
-import io.github.ardoco.textproviderjson.dto.*;
-import org.junit.jupiter.api.Assertions;
+import io.github.ardoco.textproviderjson.converter.JsonConverter;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(
+		webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@AutoConfigureMockMvc
 class StanfordCoreNlpProviderServiceApplicationTests {
 
+	@Autowired
+	private MockMvc mvc;
+
 	@Test
-	void testGetAnnotatedText() throws IOException {
-		TestRestTemplate restTemplate = new TestRestTemplate();
-		ResponseEntity<TextDTO> annotatedText = restTemplate.getForEntity("http://localhost:8080/stanfordnlp?text=This is Marie.\n", TextDTO.class);
-		Assertions.assertEquals(HttpStatus.OK, annotatedText.getStatusCode());
-		Assertions.assertNotNull(annotatedText.getBody());
-		TextDTO actualTextDto = annotatedText.getBody();
-		TextDTO expectedTextDto = getExpectedDto();
-//		Assertions.assertEquals(expectedTextDto, actualTextDto);
+	void testGetAnnotatedText() throws Exception {
+		// registration
+		String requestBody = "{\"username\": \"user1\", \"password\": \"password1\"}";
+		mvc.perform(post("/registration")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(requestBody))
+				.andExpect(status().isOk())
+				.andExpect(content().string("User created successfully"));
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBasicAuth("user1", "password1");
+		mvc.perform(get("/stanfordnlp?text=This is Marie.\n")
+						.contentType(MediaType.APPLICATION_JSON)
+						.headers(headers))
+				.andExpect(status().isOk())
+				.andExpect(content().json(JsonConverter.toJsonString(TestUtil.getExpectedDto())));
 	}
 
-	private TextDTO getExpectedDto() throws IOException {
-		WordDTO word1 = new WordDTO();
-		word1.setId(1);
-		word1.setSentenceNo(1);
-		word1.setLemma("this");
-		word1.setText("This");
-		word1.setPosTag(PosTag.forValue("DT"));
-		IncomingDependencyDTO incomingDependency1 = new IncomingDependencyDTO();
-		incomingDependency1.setDependencyTag(DependencyTag.NSUBJ);
-		incomingDependency1.setSourceWordId(3);
-		word1.setIncomingDependencies(new ArrayList<>(List.of(incomingDependency1)));
-
-		WordDTO word2 = new WordDTO();
-		word2.setId(2);
-		word2.setSentenceNo(1);
-		word2.setLemma("be");
-		word2.setText("is");
-		word2.setPosTag(PosTag.forValue("VBZ"));
-		IncomingDependencyDTO incomingDependency2 = new IncomingDependencyDTO();
-		incomingDependency2.setDependencyTag(DependencyTag.COP);
-		incomingDependency2.setSourceWordId(3);
-		word2.setIncomingDependencies(new ArrayList<>(List.of(incomingDependency2)));
-
-		WordDTO word3 = new WordDTO();
-		word3.setId(3);
-		word3.setSentenceNo(1);
-		word3.setLemma("Marie");
-		word3.setText("Marie");
-		word3.setPosTag(PosTag.forValue("NNP"));
-		OutgoingDependencyDTO outgoingDependencyDTO1 = new OutgoingDependencyDTO();
-		outgoingDependencyDTO1.setTargetWordId(1);
-		outgoingDependencyDTO1.setDependencyTag(DependencyTag.NSUBJ);
-		OutgoingDependencyDTO outgoingDependencyDTO2 = new OutgoingDependencyDTO();
-		outgoingDependencyDTO2.setTargetWordId(2);
-		outgoingDependencyDTO2.setDependencyTag(DependencyTag.COP);
-		OutgoingDependencyDTO outgoingDependencyDTO3 = new OutgoingDependencyDTO();
-		outgoingDependencyDTO3.setTargetWordId(4);
-		outgoingDependencyDTO3.setDependencyTag(DependencyTag.PUNCT);
-		word3.setOutgoingDependencies(new ArrayList<>(List.of(outgoingDependencyDTO1, outgoingDependencyDTO2, outgoingDependencyDTO3)));
-
-		WordDTO word4 = new WordDTO();
-		word4.setId(4);
-		word4.setSentenceNo(1);
-		word4.setLemma(".");
-		word4.setText(".");
-		word4.setPosTag(PosTag.forValue("."));
-		IncomingDependencyDTO incomingDependency3 = new IncomingDependencyDTO();
-		incomingDependency3.setDependencyTag(DependencyTag.PUNCT);
-		incomingDependency3.setSourceWordId(3);
-		word4.setIncomingDependencies(new ArrayList<>(List.of(incomingDependency3)));
-
-		List<WordDTO> words = new ArrayList<>(List.of(word1, word2, word3, word4));
-
-		SentenceDTO sentence1 = new SentenceDTO();
-		sentence1.setSentenceNo(1);
-		sentence1.setText("This is Marie.");
-		sentence1.setConstituencyTree("(ROOT (S (NP (DT This)) (VP (VBZ is) (NP (NNP Marie))) (. .)))");
-		sentence1.setWords(words);
-
-		List<SentenceDTO> sentences = new ArrayList<>();
-		sentences.add(sentence1);
-
-		TextDTO text = new TextDTO();
-		text.setSentences(sentences);
-
-		return text;
+	@Test
+	void testUnauthorizedRequest() throws Exception {
+		mvc.perform(get("/stanfordnlp?text=This is Marie.\n)")
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isUnauthorized());
 	}
+
+	@Test
+	void testUnsecuredRequest() throws Exception {
+		mvc.perform(get("/health")
+						.contentType(MediaType.TEXT_PLAIN))
+				.andExpect(status().isOk());
+	}
+
+	@Test
+	void testRegistration() throws Exception {
+		String requestBody = "{\"username\": \"user1\", \"password\": \"password1\"}";
+		mvc.perform(post("/registration")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(requestBody))
+				.andExpect(status().isOk())
+				.andExpect(content().string("User created successfully"));
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBasicAuth("user1", "password1");
+		mvc.perform(get("/stanfordnlp?text=This is Marie.\n")
+						.contentType(MediaType.APPLICATION_JSON)
+						.headers(headers))
+				.andExpect(status().isOk());
+	}
+
 
 }
