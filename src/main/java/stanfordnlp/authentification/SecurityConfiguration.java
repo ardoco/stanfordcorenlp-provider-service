@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,8 +31,7 @@ public class SecurityConfiguration {
         http.csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/health").permitAll()
-                .requestMatchers("/registration").permitAll()
+                .requestMatchers("/registration").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
@@ -55,7 +55,13 @@ public class SecurityConfiguration {
     @Bean
     public UserDetailsManager userDetailsService() {
         JdbcUserDetailsManager manager = new JdbcUserDetailsManager();
+
         manager.setDataSource(datasource);
+        String username = System.getenv("USERNAME");
+        String password = System.getenv("PASSWORD");
+        if(username != null && password != null) {
+            manager.createUser(User.withUsername(username).password(passwordEncoder().encode(password)).roles("ADMIN").build());
+        }
         return manager;
     }
 
