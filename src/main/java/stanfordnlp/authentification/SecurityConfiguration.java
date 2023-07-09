@@ -59,7 +59,7 @@ public class SecurityConfiguration {
         manager.setDataSource(datasource);
         String username = System.getenv("USERNAME");
         String password = System.getenv("PASSWORD");
-        if(username != null && password != null) {
+        if(username != null && password != null && !manager.userExists(username)) {
             manager.createUser(User.withUsername(username).password(passwordEncoder().encode(password)).roles("ADMIN").build());
         }
         return manager;
