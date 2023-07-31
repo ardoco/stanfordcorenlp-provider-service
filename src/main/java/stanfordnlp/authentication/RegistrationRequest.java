@@ -1,4 +1,4 @@
-package stanfordnlp.authentification;
+package stanfordnlp.authentication;
 
 public class RegistrationRequest {
     private String username;
