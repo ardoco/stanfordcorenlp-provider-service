@@ -80,4 +80,49 @@ public final class TestUtil {
 
         return text;
     }
+
+    public static String getJsonExample() {
+        return "{\"sentences\": [{" +
+                "\"sentenceNo\": 1," +
+                "\"text\": \"Hello World!\"," +
+                "\"constituencyTree\": \"(ROOT (FRAG (INTJ (UH Hello)) (NP (NNP World)) (. !)))\"," +
+                "\"words\": [" +
+                "{\"sentenceNo\": 1," +
+                "\"id\": 1," +
+                "\"text\": \"Hello\"," +
+                "\"lemma\": \"hello\"," +
+                "\"posTag\": \"UH\"," +
+                "\"outgoingDependencies\": []," +
+                "\"incomingDependencies\": [" +
+                "{" +
+                "\"sourceWordId\": 2," +
+                "\"dependencyType\": \"DISCOURSE\"}" +
+                "]}," +
+                "{\"sentenceNo\": 1," +
+                "\"id\": 1," +
+                "\"text\": \"World\"," +
+                "\"lemma\": \"World\"," +
+                "\"posTag\": \"NNP\"," +
+                "\"outgoingDependencies\": [" +
+                "{" +
+                "\"targetWordId\": 1," +
+                "\"dependencyType\": \"DISCOURSE\"}," +
+                "{" +
+                "\"targetWordId\": 3," +
+                "\"dependencyType\": \"PUNCT\"}" +
+                "]," +
+                "\"incomingDependencies\": []}" +
+                "," +
+                "{\"sentenceNo\": 1," +
+                "\"id\": 1," +
+                "\"text\": \"!\"," +
+                "\"lemma\": \"!\"," +
+                "\"posTag\": \".\"," +
+                "\"outgoingDependencies\": []," +
+                "\"incomingDependencies\": [" +
+                "{" +
+                "\"sourceWordId\": 2," +
+                "\"dependencyType\": \"PUNCT\"}" +
+                "]}]}]}";
+    }
 }
