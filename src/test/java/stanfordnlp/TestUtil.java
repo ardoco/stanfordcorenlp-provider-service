@@ -13,69 +13,69 @@ public final class TestUtil {
         throw new IllegalStateException("Utility class");
     }
 
-    public static TextDTO getExpectedDto() throws IOException {
-        WordDTO word1 = new WordDTO();
+    public static TextDto getExpectedDto() throws IOException {
+        WordDto word1 = new WordDto();
         word1.setId(1);
         word1.setSentenceNo(1);
         word1.setLemma("this");
         word1.setText("This");
         word1.setPosTag(PosTag.forValue("DT"));
-        IncomingDependencyDTO incomingDependency1 = new IncomingDependencyDTO();
+        IncomingDependencyDto incomingDependency1 = new IncomingDependencyDto();
         incomingDependency1.setDependencyTag(DependencyTag.NSUBJ);
         incomingDependency1.setSourceWordId(3);
         word1.setIncomingDependencies(new ArrayList<>(List.of(incomingDependency1)));
 
-        WordDTO word2 = new WordDTO();
+        WordDto word2 = new WordDto();
         word2.setId(2);
         word2.setSentenceNo(1);
         word2.setLemma("be");
         word2.setText("is");
         word2.setPosTag(PosTag.forValue("VBZ"));
-        IncomingDependencyDTO incomingDependency2 = new IncomingDependencyDTO();
+        IncomingDependencyDto incomingDependency2 = new IncomingDependencyDto();
         incomingDependency2.setDependencyTag(DependencyTag.COP);
         incomingDependency2.setSourceWordId(3);
         word2.setIncomingDependencies(new ArrayList<>(List.of(incomingDependency2)));
 
-        WordDTO word3 = new WordDTO();
+        WordDto word3 = new WordDto();
         word3.setId(3);
         word3.setSentenceNo(1);
         word3.setLemma("Marie");
         word3.setText("Marie");
         word3.setPosTag(PosTag.forValue("NNP"));
-        OutgoingDependencyDTO outgoingDependencyDTO1 = new OutgoingDependencyDTO();
-        outgoingDependencyDTO1.setTargetWordId(1);
-        outgoingDependencyDTO1.setDependencyTag(DependencyTag.NSUBJ);
-        OutgoingDependencyDTO outgoingDependencyDTO2 = new OutgoingDependencyDTO();
-        outgoingDependencyDTO2.setTargetWordId(2);
-        outgoingDependencyDTO2.setDependencyTag(DependencyTag.COP);
-        OutgoingDependencyDTO outgoingDependencyDTO3 = new OutgoingDependencyDTO();
-        outgoingDependencyDTO3.setTargetWordId(4);
-        outgoingDependencyDTO3.setDependencyTag(DependencyTag.PUNCT);
-        word3.setOutgoingDependencies(new ArrayList<>(List.of(outgoingDependencyDTO1, outgoingDependencyDTO2, outgoingDependencyDTO3)));
+        OutgoingDependencyDto outgoingDependencyDto1 = new OutgoingDependencyDto();
+        outgoingDependencyDto1.setTargetWordId(1);
+        outgoingDependencyDto1.setDependencyTag(DependencyTag.NSUBJ);
+        OutgoingDependencyDto outgoingDependencyDto2 = new OutgoingDependencyDto();
+        outgoingDependencyDto2.setTargetWordId(2);
+        outgoingDependencyDto2.setDependencyTag(DependencyTag.COP);
+        OutgoingDependencyDto outgoingDependencyDto3 = new OutgoingDependencyDto();
+        outgoingDependencyDto3.setTargetWordId(4);
+        outgoingDependencyDto3.setDependencyTag(DependencyTag.PUNCT);
+        word3.setOutgoingDependencies(new ArrayList<>(List.of(outgoingDependencyDto1, outgoingDependencyDto2, outgoingDependencyDto3)));
 
-        WordDTO word4 = new WordDTO();
+        WordDto word4 = new WordDto();
         word4.setId(4);
         word4.setSentenceNo(1);
         word4.setLemma(".");
         word4.setText(".");
         word4.setPosTag(PosTag.forValue("."));
-        IncomingDependencyDTO incomingDependency3 = new IncomingDependencyDTO();
+        IncomingDependencyDto incomingDependency3 = new IncomingDependencyDto();
         incomingDependency3.setDependencyTag(DependencyTag.PUNCT);
         incomingDependency3.setSourceWordId(3);
         word4.setIncomingDependencies(new ArrayList<>(List.of(incomingDependency3)));
 
-        List<WordDTO> words = new ArrayList<>(List.of(word1, word2, word3, word4));
+        List<WordDto> words = new ArrayList<>(List.of(word1, word2, word3, word4));
 
-        SentenceDTO sentence1 = new SentenceDTO();
+        SentenceDto sentence1 = new SentenceDto();
         sentence1.setSentenceNo(1);
         sentence1.setText("This is Marie.");
         sentence1.setConstituencyTree("(ROOT (S (NP (DT This)) (VP (VBZ is) (NP (NNP Marie))) (. .)))");
         sentence1.setWords(words);
 
-        List<SentenceDTO> sentences = new ArrayList<>();
+        List<SentenceDto> sentences = new ArrayList<>();
         sentences.add(sentence1);
 
-        TextDTO text = new TextDTO();
+        TextDto text = new TextDto();
         text.setSentences(sentences);
 
         return text;
