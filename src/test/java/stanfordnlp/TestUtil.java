@@ -99,7 +99,7 @@ public final class TestUtil {
                 "\"dependencyType\": \"DISCOURSE\"}" +
                 "]}," +
                 "{\"sentenceNo\": 1," +
-                "\"id\": 1," +
+                "\"id\": 2," +
                 "\"text\": \"World\"," +
                 "\"lemma\": \"World\"," +
                 "\"posTag\": \"NNP\"," +
@@ -114,7 +114,7 @@ public final class TestUtil {
                 "\"incomingDependencies\": []}" +
                 "," +
                 "{\"sentenceNo\": 1," +
-                "\"id\": 1," +
+                "\"id\": 3," +
                 "\"text\": \"!\"," +
                 "\"lemma\": \"!\"," +
                 "\"posTag\": \".\"," +

@@ -19,7 +19,7 @@ class RegistrationControllerTest {
     static TestRestTemplate restTemplate;
 
     @ClassRule
-    public static GenericContainer simpleWebServer = new GenericContainer("stanfordnlp")
+    public static GenericContainer simpleWebServer = new GenericContainer("lauraxrb/stanfordnlp-microservice")
             .withExposedPorts(8080)
             .withImagePullPolicy(PullPolicy.defaultPolicy());
 
