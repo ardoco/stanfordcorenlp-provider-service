@@ -1,0 +1,12 @@
+services:
+  stanfordcorenlp-provider:
+    image: ghcr.io/ardoco/stanfordcorenlp-provider-service:latest
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      - "USERNAME=admin"
+      - "PASSWORD=changeme"
