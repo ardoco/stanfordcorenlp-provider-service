@@ -16,7 +16,7 @@ public class RegistrationController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @PostMapping("/registration")
+    @PostMapping("/stanfordnlp/registration")
     public String registerUser(@RequestBody RegistrationRequest request) {
         String username = request.getUsername();
         String password = request.getPassword();

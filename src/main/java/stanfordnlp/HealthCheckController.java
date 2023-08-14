@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HealthCheckController {
 
-    @GetMapping("/health")
+    @GetMapping("/stanfordnlp/health")
     public ResponseEntity<String> healthCheck() {
         // no further checks needed for now
         return ResponseEntity.ok("Microservice is healthy");
