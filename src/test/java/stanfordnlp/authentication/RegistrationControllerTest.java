@@ -13,8 +13,8 @@ class RegistrationControllerTest {
 
     String username = "defaultadmin";
     String password = "defaultpassword";
-    String registrationEndpoint = "/registration";
-    String healthEndpoint = "/health";
+    String registrationEndpoint = "/stanfordnlp/registration";
+    String healthEndpoint = "/stanfordnlp/health";
     static String address;
     static TestRestTemplate restTemplate;
 

@@ -35,7 +35,7 @@ public class SecurityConfiguration {
         http.csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/registration").hasRole("ADMIN")
+                .requestMatchers("/stanfordnlp/registration").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
