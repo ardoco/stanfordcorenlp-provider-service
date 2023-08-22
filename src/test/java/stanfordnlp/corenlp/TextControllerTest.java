@@ -26,7 +26,7 @@ public class TextControllerTest {
     static TestRestTemplate restTemplate;
 
     @ClassRule
-    public static GenericContainer simpleWebServer = new GenericContainer("lauraxrb/stanfordnlp-microservice")
+    public static GenericContainer simpleWebServer = new GenericContainer("stanfordnlp-microservice")
             .withExposedPorts(8080)
             .withImagePullPolicy(PullPolicy.defaultPolicy());
 
