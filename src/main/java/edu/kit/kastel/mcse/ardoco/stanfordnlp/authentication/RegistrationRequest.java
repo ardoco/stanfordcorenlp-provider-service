@@ -1,4 +1,4 @@
-package stanfordnlp.authentication;
+package edu.kit.kastel.mcse.ardoco.stanfordnlp.authentication;
 
 public class RegistrationRequest {
     private String username;

@@ -1,5 +1,5 @@
 /* Licensed under MIT 2022. */
-package stanfordnlp.corenlp;
+package edu.kit.kastel.mcse.ardoco.stanfordnlp.corenlp;
 
 import edu.kit.kastel.mcse.ardoco.core.api.text.*;
 import edu.stanford.nlp.ling.CoreAnnotations;
