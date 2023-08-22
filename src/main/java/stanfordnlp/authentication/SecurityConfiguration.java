@@ -23,8 +23,12 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
+    private final DataSource dataSource;
+
     @Autowired
-    DataSource datasource;
+    public SecurityConfiguration(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -56,7 +60,7 @@ public class SecurityConfiguration {
     public UserDetailsManager userDetailsService() {
         JdbcUserDetailsManager manager = new JdbcUserDetailsManager();
 
-        manager.setDataSource(datasource);
+        manager.setDataSource(dataSource);
         String username = System.getenv("USERNAME");
         String password = System.getenv("PASSWORD");
         if(username != null && password != null && !manager.userExists(username)) {
