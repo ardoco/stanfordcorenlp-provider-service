@@ -1,8 +1,8 @@
 package stanfordnlp.corenlp;
 
-import io.github.ardoco.textproviderjson.converter.JsonConverter;
-import io.github.ardoco.textproviderjson.dto.TextDto;
-import io.github.ardoco.textproviderjson.error.InvalidJsonException;
+import edu.kit.kastel.mcse.ardoco.core.textproviderjson.converter.JsonConverter;
+import edu.kit.kastel.mcse.ardoco.core.textproviderjson.dto.TextDto;
+import edu.kit.kastel.mcse.ardoco.core.textproviderjson.error.InvalidJsonException;
 import org.junit.ClassRule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;

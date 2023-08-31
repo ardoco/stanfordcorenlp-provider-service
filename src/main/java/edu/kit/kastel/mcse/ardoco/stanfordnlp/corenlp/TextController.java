@@ -1,9 +1,9 @@
 package edu.kit.kastel.mcse.ardoco.stanfordnlp.corenlp;
 
 import edu.kit.kastel.mcse.ardoco.core.api.text.Text;
-import io.github.ardoco.textproviderjson.converter.ObjectToDtoConverter;
-import io.github.ardoco.textproviderjson.dto.TextDto;
-import io.github.ardoco.textproviderjson.error.NotConvertableException;
+import edu.kit.kastel.mcse.ardoco.core.textproviderjson.converter.ObjectToDtoConverter;
+import edu.kit.kastel.mcse.ardoco.core.textproviderjson.dto.TextDto;
+import edu.kit.kastel.mcse.ardoco.core.textproviderjson.error.NotConvertableException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

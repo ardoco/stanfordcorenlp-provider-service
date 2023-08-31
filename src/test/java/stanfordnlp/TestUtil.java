@@ -1,7 +1,7 @@
 package stanfordnlp;
 
 import edu.kit.kastel.mcse.ardoco.core.api.text.DependencyTag;
-import io.github.ardoco.textproviderjson.dto.*;
+import edu.kit.kastel.mcse.ardoco.core.textproviderjson.dto.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
