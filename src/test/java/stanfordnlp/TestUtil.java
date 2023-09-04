@@ -1,11 +1,12 @@
+/* Licensed under MIT 2023. */
 package stanfordnlp;
-
-import edu.kit.kastel.mcse.ardoco.core.api.text.DependencyTag;
-import edu.kit.kastel.mcse.ardoco.core.textproviderjson.dto.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.kit.kastel.mcse.ardoco.core.api.text.DependencyTag;
+import edu.kit.kastel.mcse.ardoco.core.textproviderjson.dto.*;
 
 public final class TestUtil {
 
@@ -82,47 +83,6 @@ public final class TestUtil {
     }
 
     public static String getJsonExample() {
-        return "{\"sentences\": [{" +
-                "\"sentenceNo\": 1," +
-                "\"text\": \"Hello World!\"," +
-                "\"constituencyTree\": \"(ROOT (FRAG (INTJ (UH Hello)) (NP (NNP World)) (. !)))\"," +
-                "\"words\": [" +
-                "{\"sentenceNo\": 1," +
-                "\"id\": 1," +
-                "\"text\": \"Hello\"," +
-                "\"lemma\": \"hello\"," +
-                "\"posTag\": \"UH\"," +
-                "\"outgoingDependencies\": []," +
-                "\"incomingDependencies\": [" +
-                "{" +
-                "\"sourceWordId\": 2," +
-                "\"dependencyType\": \"DISCOURSE\"}" +
-                "]}," +
-                "{\"sentenceNo\": 1," +
-                "\"id\": 2," +
-                "\"text\": \"World\"," +
-                "\"lemma\": \"World\"," +
-                "\"posTag\": \"NNP\"," +
-                "\"outgoingDependencies\": [" +
-                "{" +
-                "\"targetWordId\": 1," +
-                "\"dependencyType\": \"DISCOURSE\"}," +
-                "{" +
-                "\"targetWordId\": 3," +
-                "\"dependencyType\": \"PUNCT\"}" +
-                "]," +
-                "\"incomingDependencies\": []}" +
-                "," +
-                "{\"sentenceNo\": 1," +
-                "\"id\": 3," +
-                "\"text\": \"!\"," +
-                "\"lemma\": \"!\"," +
-                "\"posTag\": \".\"," +
-                "\"outgoingDependencies\": []," +
-                "\"incomingDependencies\": [" +
-                "{" +
-                "\"sourceWordId\": 2," +
-                "\"dependencyType\": \"PUNCT\"}" +
-                "]}]}]}";
+        return "{\"sentences\": [{" + "\"sentenceNo\": 1," + "\"text\": \"Hello World!\"," + "\"constituencyTree\": \"(ROOT (FRAG (INTJ (UH Hello)) (NP (NNP World)) (. !)))\"," + "\"words\": [" + "{\"sentenceNo\": 1," + "\"id\": 1," + "\"text\": \"Hello\"," + "\"lemma\": \"hello\"," + "\"posTag\": \"UH\"," + "\"outgoingDependencies\": []," + "\"incomingDependencies\": [" + "{" + "\"sourceWordId\": 2," + "\"dependencyType\": \"DISCOURSE\"}" + "]}," + "{\"sentenceNo\": 1," + "\"id\": 2," + "\"text\": \"World\"," + "\"lemma\": \"World\"," + "\"posTag\": \"NNP\"," + "\"outgoingDependencies\": [" + "{" + "\"targetWordId\": 1," + "\"dependencyType\": \"DISCOURSE\"}," + "{" + "\"targetWordId\": 3," + "\"dependencyType\": \"PUNCT\"}" + "]," + "\"incomingDependencies\": []}" + "," + "{\"sentenceNo\": 1," + "\"id\": 3," + "\"text\": \"!\"," + "\"lemma\": \"!\"," + "\"posTag\": \".\"," + "\"outgoingDependencies\": []," + "\"incomingDependencies\": [" + "{" + "\"sourceWordId\": 2," + "\"dependencyType\": \"PUNCT\"}" + "]}]}]}";
     }
 }

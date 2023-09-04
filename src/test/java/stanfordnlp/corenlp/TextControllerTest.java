@@ -1,8 +1,9 @@
+/* Licensed under MIT 2023. */
 package stanfordnlp.corenlp;
 
-import edu.kit.kastel.mcse.ardoco.core.textproviderjson.converter.JsonConverter;
-import edu.kit.kastel.mcse.ardoco.core.textproviderjson.dto.TextDto;
-import edu.kit.kastel.mcse.ardoco.core.textproviderjson.error.InvalidJsonException;
+import java.io.IOException;
+import java.nio.file.Path;
+
 import org.junit.ClassRule;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
@@ -13,13 +14,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.images.builder.ImageFromDockerfile;
+
+import edu.kit.kastel.mcse.ardoco.core.textproviderjson.converter.JsonConverter;
+import edu.kit.kastel.mcse.ardoco.core.textproviderjson.dto.TextDto;
+import edu.kit.kastel.mcse.ardoco.core.textproviderjson.error.InvalidJsonException;
 import stanfordnlp.TestUtil;
 
-import java.io.IOException;
-import java.nio.file.Path;
-
 public class TextControllerTest {
-
 
     String username = "admin";
     String password = "changeme";
@@ -28,7 +29,8 @@ public class TextControllerTest {
     static TestRestTemplate restTemplate;
 
     @ClassRule
-    public static GenericContainer<?> simpleWebServer = new GenericContainer<>(new ImageFromDockerfile("localhost/testcontainers/stanfordcorenlp-provider-service", true) //
+    public static GenericContainer<?> simpleWebServer = new GenericContainer<>(new ImageFromDockerfile(
+            "localhost/testcontainers/stanfordcorenlp-provider-service", true) //
             .withFileFromPath("./src", Path.of("./src")) //
             .withFileFromPath("./pom.xml", Path.of("./pom.xml")) //
             .withFileFromPath("./Dockerfile", Path.of("./Dockerfile")) //

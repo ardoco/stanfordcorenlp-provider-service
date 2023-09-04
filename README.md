@@ -9,11 +9,11 @@ The annotation is performed using Stanford CoreNLP.
 The endpoints are secured with HTTP Basic Authentication. To access the endpoints, you need to provide a username and password.
 
 Before you start the microservice, you need to set the environment variables USERNAME and PASSWORD to the desired username and password of the admin user.
-With these credentials, you can access every endpoint as admin. 
+With these credentials, you can access every endpoint as admin.
 To register a new user, an admin needs to send a POST request to the endpoint /stanfordnlp/registration with the username and password of the new user in the body of the request, e.g.:
 
 (replace USERNAME and PASSWORD with the username and password of the admin user):
-``` 
+```
 curl -X POST -H "Content-Type: application/json" -d '{"username":"newuser", "password":"newpassword"}' -u USERNAME:PASSWORD http://localhost:8080/stanfordnlp/registration
 ```
 

@@ -1,4 +1,7 @@
+/* Licensed under MIT 2023. */
 package edu.kit.kastel.mcse.ardoco.stanfordnlp.authentication;
+
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -7,7 +10,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,8 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -35,8 +35,10 @@ public class SecurityConfiguration {
         http.csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/stanfordnlp/registration").hasRole("ADMIN")
-                .anyRequest().authenticated()
+                .requestMatchers("/stanfordnlp/registration")
+                .hasRole("ADMIN")
+                .anyRequest()
+                .authenticated()
                 .and()
                 .httpBasic()
                 .and()
@@ -63,7 +65,7 @@ public class SecurityConfiguration {
         manager.setDataSource(dataSource);
         String username = System.getenv("USERNAME");
         String password = System.getenv("PASSWORD");
-        if(username != null && password != null && !manager.userExists(username)) {
+        if (username != null && password != null && !manager.userExists(username)) {
             manager.createUser(User.withUsername(username).password(passwordEncoder().encode(password)).roles("ADMIN").build());
         }
         return manager;
@@ -75,4 +77,3 @@ public class SecurityConfiguration {
     }
 
 }
-

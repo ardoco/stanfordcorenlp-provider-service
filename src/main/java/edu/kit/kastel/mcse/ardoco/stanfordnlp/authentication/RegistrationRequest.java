@@ -1,3 +1,4 @@
+/* Licensed under MIT 2023. */
 package edu.kit.kastel.mcse.ardoco.stanfordnlp.authentication;
 
 public class RegistrationRequest {
@@ -20,4 +21,3 @@ public class RegistrationRequest {
         this.password = password;
     }
 }
-

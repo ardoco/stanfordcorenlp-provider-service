@@ -1,3 +1,4 @@
+/* Licensed under MIT 2023. */
 package edu.kit.kastel.mcse.ardoco.stanfordnlp.authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +28,10 @@ public class RegistrationController {
 
         String encodedPassword = passwordEncoder.encode(password);
 
-        UserDetails newUser = User.withUsername(username)
-                .password(encodedPassword)
-                .roles("USER")
-                .build();
+        UserDetails newUser = User.withUsername(username).password(encodedPassword).roles("USER").build();
 
         userDetailsService.createUser(newUser);
 
         return "User created successfully";
     }
 }
-
