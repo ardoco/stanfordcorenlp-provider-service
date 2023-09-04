@@ -1,27 +1,36 @@
 package stanfordnlp.authentication;
 
 import org.junit.ClassRule;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.images.PullPolicy;
+import org.testcontainers.images.builder.ImageFromDockerfile;
+
+import java.nio.file.Path;
 
 class RegistrationControllerTest {
 
-    String username = "defaultadmin";
-    String password = "defaultpassword";
+    String username = "admin";
+    String password = "changeme";
     String registrationEndpoint = "/stanfordnlp/registration";
     String healthEndpoint = "/stanfordnlp/health";
     static String address;
     static TestRestTemplate restTemplate;
 
     @ClassRule
-    public static GenericContainer simpleWebServer = new GenericContainer("stanfordnlp-microservice")
-            .withExposedPorts(8080)
-            .withImagePullPolicy(PullPolicy.defaultPolicy());
+    public static GenericContainer<?> simpleWebServer = new GenericContainer<>(new ImageFromDockerfile("localhost/testcontainers/stanfordcorenlp-provider-service", true) //
+            .withFileFromPath("./src", Path.of("./src")) //
+            .withFileFromPath("./pom.xml", Path.of("./pom.xml")) //
+            .withFileFromPath("./Dockerfile", Path.of("./Dockerfile")) //
+    ).withExposedPorts(8080);
 
     @BeforeAll
     static void beforeAll() {
@@ -30,6 +39,11 @@ class RegistrationControllerTest {
                 + simpleWebServer.getContainerIpAddress()
                 + ":" + simpleWebServer.getMappedPort(8080);
         restTemplate = new TestRestTemplate();
+    }
+
+    @AfterAll
+    static void tearDown() {
+        simpleWebServer.stop();
     }
 
     @Test
@@ -42,7 +56,7 @@ class RegistrationControllerTest {
         headers0.setContentType(MediaType.APPLICATION_JSON);
         String requestBody0 = "{\"username\": \"" + newUsername + "\", \"password\": \"" + newPassword + "\"}";
         HttpEntity<String> request0 = new HttpEntity<>(requestBody0, headers0);
-        ResponseEntity<String> response0 =  restTemplate.postForEntity(address + registrationEndpoint, request0, String.class);
+        ResponseEntity<String> response0 = restTemplate.postForEntity(address + registrationEndpoint, request0, String.class);
         Assertions.assertEquals(HttpStatus.UNAUTHORIZED, response0.getStatusCode());
 
         // register new user
@@ -50,7 +64,7 @@ class RegistrationControllerTest {
         headers1.setContentType(MediaType.APPLICATION_JSON);
         String requestBody1 = "{\"username\": \"" + newUsername + "\", \"password\": \"" + newPassword + "\"}";
         HttpEntity<String> request1 = new HttpEntity<>(requestBody1, headers1);
-        ResponseEntity<String> response1 =  restTemplate.withBasicAuth(username, password).postForEntity(address + registrationEndpoint, request1, String.class);
+        ResponseEntity<String> response1 = restTemplate.withBasicAuth(username, password).postForEntity(address + registrationEndpoint, request1, String.class);
         Assertions.assertEquals(HttpStatus.OK, response1.getStatusCode());
         Assertions.assertEquals("User created successfully", response1.getBody());
 
@@ -63,7 +77,7 @@ class RegistrationControllerTest {
         headers3.setContentType(MediaType.APPLICATION_JSON);
         String requestBody3 = "{\"username\": \"user2\", \"password\": \"password2\"}";
         HttpEntity<String> request3 = new HttpEntity<>(requestBody3, headers3);
-        ResponseEntity<String> response3 =  restTemplate.withBasicAuth(newUsername, newPassword).postForEntity(address + registrationEndpoint, request3, String.class);
+        ResponseEntity<String> response3 = restTemplate.withBasicAuth(newUsername, newPassword).postForEntity(address + registrationEndpoint, request3, String.class);
         Assertions.assertEquals(HttpStatus.FORBIDDEN, response3.getStatusCode());
 
         // check if user with same credentials can't be registered again
@@ -71,7 +85,7 @@ class RegistrationControllerTest {
         headers4.setContentType(MediaType.APPLICATION_JSON);
         String requestBody4 = "{\"username\": \"" + newUsername + "\", \"password\": \"" + newPassword + "\"}";
         HttpEntity<String> request4 = new HttpEntity<>(requestBody4, headers4);
-        ResponseEntity<String> response4 =  restTemplate.withBasicAuth(username, password).postForEntity(address + registrationEndpoint, request4, String.class);
+        ResponseEntity<String> response4 = restTemplate.withBasicAuth(username, password).postForEntity(address + registrationEndpoint, request4, String.class);
         Assertions.assertEquals(HttpStatus.OK, response4.getStatusCode());
         Assertions.assertEquals("User already exists", response4.getBody());
     }
