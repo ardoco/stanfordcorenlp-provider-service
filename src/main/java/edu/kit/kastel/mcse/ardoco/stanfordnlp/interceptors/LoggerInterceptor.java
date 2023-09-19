@@ -1,0 +1,28 @@
+package edu.kit.kastel.mcse.ardoco.stanfordnlp.interceptors;
+
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+public class LoggerInterceptor implements HandlerInterceptor {
+    private static final Logger logger = LoggerFactory.getLogger(LoggerInterceptor.class);
+
+    @Override
+    public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
+        String ipAddress = getIpAddress(request);
+        logger.info("Receiving {} connection from {} with URI {}", request.getMethod(), ipAddress, request.getRequestURI());
+        return true;
+    }
+
+    private static String getIpAddress(HttpServletRequest request) {
+        String ipFromHeader = request.getHeader("X-FORWARDED-FOR");
+        if (ipFromHeader != null && !ipFromHeader.isEmpty()) {
+            return ipFromHeader;
+        }
+        return request.getRemoteAddr();
+    }
+}

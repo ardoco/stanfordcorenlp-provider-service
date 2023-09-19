@@ -23,7 +23,7 @@ public class TextController {
     private static final Logger logger = LoggerFactory.getLogger(TextController.class);
 
     @PostMapping(path = "/stanfordnlp")
-    public TextDto postTextRequest(@RequestBody TextRequestBody textRequestBody) throws NotConvertableException { //TODO
+    public TextDto postTextRequest(@RequestBody TextRequestBody textRequestBody) throws NotConvertableException {
         String text = textRequestBody.getText();
         logger.info("Getting request for a text (length: {})", text.length());
         InputStream inputStream = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
