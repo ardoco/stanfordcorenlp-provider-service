@@ -14,14 +14,19 @@ public class LoggerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
-        logger.info("Receiving {} connection from {} with URI {}", request.getMethod(), getIpAddress(request), request.getRequestURI());
+        if (logger.isInfoEnabled()) {
+            logger.info("Receiving {} connection from {} with URI {}", request.getMethod(), getIpAddress(request), request.getRequestURI());
+        }
         return true;
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler, ModelAndView modelAndView)
+            throws Exception {
         HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
-        logger.info("Finished processing for {} from {} with URI {}", request.getMethod(), getIpAddress(request), request.getRequestURI());
+        if (logger.isInfoEnabled()) {
+            logger.info("Finished processing for {} from {} with URI {}", request.getMethod(), getIpAddress(request), request.getRequestURI());
+        }
     }
 
     private static String getIpAddress(HttpServletRequest request) {
