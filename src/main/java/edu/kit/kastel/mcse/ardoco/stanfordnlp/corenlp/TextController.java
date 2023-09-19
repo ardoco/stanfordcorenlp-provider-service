@@ -5,8 +5,10 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.kit.kastel.mcse.ardoco.core.api.text.Text;
@@ -16,9 +18,12 @@ import edu.kit.kastel.mcse.ardoco.core.textproviderjson.error.NotConvertableExce
 
 @RestController
 public class TextController {
+    private static final Logger logger = LoggerFactory.getLogger(TextController.class);
 
-    @GetMapping("/stanfordnlp")
-    public TextDto texting(@RequestParam(defaultValue = "The quick brown fox jumped over the lazy dog.") String text) throws NotConvertableException {
+    @PostMapping(path = "/stanfordnlp")
+    public TextDto postTextRequest(@RequestBody TextRequestBody textRequestBody) throws NotConvertableException { //TODO
+        String text = textRequestBody.getText();
+        logger.info("Getting request for a text (length: {})", text.length());
         InputStream inputStream = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
         Text annotatedText = processText(inputStream);
         return convertToDto(annotatedText);
