@@ -17,7 +17,7 @@
     <java.version>17</java.version>
     <ardoco.core.version>0.24.1</ardoco.core.version>
     <stanford-corenlp.version>4.5.5</stanford-corenlp.version>
-    <spotless.version>2.39.0</spotless.version>
+    <spotless.version>2.40.0</spotless.version>
   </properties>
   <dependencies>
     <dependency>
