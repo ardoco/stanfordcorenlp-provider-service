@@ -15,7 +15,7 @@
   <description>Microservice for Standford Core NLP</description>
   <properties>
     <java.version>17</java.version>
-    <ardoco.core.version>0.24.1</ardoco.core.version>
+    <ardoco.core.version>0.25.0</ardoco.core.version>
     <stanford-corenlp.version>4.5.5</stanford-corenlp.version>
     <spotless.version>2.39.0</spotless.version>
   </properties>
