@@ -6,7 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.kit.kastel.mcse.ardoco.core.api.text.DependencyTag;
-import edu.kit.kastel.mcse.ardoco.core.textproviderjson.dto.*;
+import edu.kit.kastel.mcse.ardoco.core.api.text.POSTag;
+import edu.kit.kastel.mcse.ardoco.core.textproviderjson.dto.IncomingDependencyDto;
+import edu.kit.kastel.mcse.ardoco.core.textproviderjson.dto.OutgoingDependencyDto;
+import edu.kit.kastel.mcse.ardoco.core.textproviderjson.dto.SentenceDto;
+import edu.kit.kastel.mcse.ardoco.core.textproviderjson.dto.TextDto;
+import edu.kit.kastel.mcse.ardoco.core.textproviderjson.dto.WordDto;
 
 public final class TestUtil {
 
@@ -20,7 +25,7 @@ public final class TestUtil {
         word1.setSentenceNo(1);
         word1.setLemma("this");
         word1.setText("This");
-        word1.setPosTag(PosTag.forValue("DT"));
+        word1.setPosTag(POSTag.forValue("DT"));
         IncomingDependencyDto incomingDependency1 = new IncomingDependencyDto();
         incomingDependency1.setDependencyTag(DependencyTag.NSUBJ);
         incomingDependency1.setSourceWordId(3);
@@ -31,7 +36,7 @@ public final class TestUtil {
         word2.setSentenceNo(1);
         word2.setLemma("be");
         word2.setText("is");
-        word2.setPosTag(PosTag.forValue("VBZ"));
+        word2.setPosTag(POSTag.forValue("VBZ"));
         IncomingDependencyDto incomingDependency2 = new IncomingDependencyDto();
         incomingDependency2.setDependencyTag(DependencyTag.COP);
         incomingDependency2.setSourceWordId(3);
@@ -42,7 +47,7 @@ public final class TestUtil {
         word3.setSentenceNo(1);
         word3.setLemma("Marie");
         word3.setText("Marie");
-        word3.setPosTag(PosTag.forValue("NNP"));
+        word3.setPosTag(POSTag.forValue("NNP"));
         OutgoingDependencyDto outgoingDependencyDto1 = new OutgoingDependencyDto();
         outgoingDependencyDto1.setTargetWordId(1);
         outgoingDependencyDto1.setDependencyTag(DependencyTag.NSUBJ);
@@ -59,7 +64,7 @@ public final class TestUtil {
         word4.setSentenceNo(1);
         word4.setLemma(".");
         word4.setText(".");
-        word4.setPosTag(PosTag.forValue("."));
+        word4.setPosTag(POSTag.forValue("."));
         IncomingDependencyDto incomingDependency3 = new IncomingDependencyDto();
         incomingDependency3.setDependencyTag(DependencyTag.PUNCT);
         incomingDependency3.setSourceWordId(3);
