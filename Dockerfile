@@ -1,11 +1,11 @@
-FROM maven:3-eclipse-temurin-17 AS builder
+FROM maven:3-eclipse-temurin-21 AS builder
 
 WORKDIR /usr/src/scnlp
 COPY src src
 COPY pom.xml pom.xml
 RUN mvn -DskipTests=true clean package
 
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:21-jre
 
 ENV TZ=Europe/Berlin
 ENV USERNAME="admin"
