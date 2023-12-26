@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.2.0</version>
+    <version>3.2.1</version>
     <relativePath />
   </parent>
   <groupId>io.github.ardoco</groupId>
@@ -15,7 +15,7 @@
   <description>Microservice for Standford Core NLP</description>
   <properties>
     <java.version>21</java.version>
-    <ardoco.core.version>0.33.0</ardoco.core.version>
+    <ardoco.core.version>0.35.0</ardoco.core.version>
     <stanford-corenlp.version>4.5.5</stanford-corenlp.version>
     <spotless.version>2.41.1</spotless.version>
   </properties>
