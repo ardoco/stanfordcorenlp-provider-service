@@ -9,7 +9,7 @@
   </parent>
   <groupId>io.github.ardoco</groupId>
   <artifactId>stanfordnlp</artifactId>
-  <version>0.12.0-SNAPSHOT</version>
+  <version>0.12.0</version>
 
   <name>StanfordCoreNLP-Provider-Service</name>
   <description>Microservice for Standford Core NLP</description>
