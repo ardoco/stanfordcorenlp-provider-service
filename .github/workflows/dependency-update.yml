@@ -10,5 +10,7 @@ on:
 jobs:
   update:
     uses: ardoco/actions/.github/workflows/maven-update.yml@main
+    with:
+      create-tag: false
     secrets:
       PAT: ${{ secrets.SDQ_TOKEN }}
