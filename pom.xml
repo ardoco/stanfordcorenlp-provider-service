@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.4.3</version>
+    <version>3.4.4</version>
     <relativePath />
   </parent>
   <groupId>io.github.ardoco</groupId>
@@ -19,7 +19,7 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven.compiler.release>${java.version}</maven.compiler.release>
     <ardoco.core.version>1.0.0</ardoco.core.version>
-    <stanford-corenlp.version>4.5.8</stanford-corenlp.version>
+    <stanford-corenlp.version>4.5.9</stanford-corenlp.version>
     <spotless.version>2.44.3</spotless.version>
   </properties>
   <dependencies>
