@@ -5,7 +5,7 @@ COPY src src
 COPY pom.xml pom.xml
 RUN mvn -DskipTests=true clean package
 
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:24-jre
 
 ENV TZ=Europe/Berlin
 ENV USERNAME="admin"
