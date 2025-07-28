@@ -1,3 +1,4 @@
+/* Licensed under MIT 2025. */
 package edu.kit.kastel.mcse.ardoco.stanfordnlp.corenlp;
 
 import java.net.URLDecoder;
