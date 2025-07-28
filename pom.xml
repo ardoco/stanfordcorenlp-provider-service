@@ -11,7 +11,6 @@
 
   <name>StanfordCoreNLP-Provider-Service</name>
   <description>Microservice for Standford Core NLP</description>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -66,6 +65,22 @@
       <artifactId>testcontainers</artifactId>
     </dependency>
   </dependencies>
+  <repositories>
+    <repository>
+      <id>mavenCentral</id>
+      <url>https://repo1.maven.org/maven2/</url>
+    </repository>
+    <repository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>mavenSnapshot</id>
+      <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+    </repository>
+  </repositories>
 
   <build>
     <resources>
