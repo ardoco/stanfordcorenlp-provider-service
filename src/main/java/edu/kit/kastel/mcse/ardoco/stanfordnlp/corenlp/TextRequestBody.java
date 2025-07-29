@@ -1,15 +1,10 @@
+/* Licensed under MIT 2025. */
 package edu.kit.kastel.mcse.ardoco.stanfordnlp.corenlp;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class TextRequestBody {
-    private static final Logger logger = LoggerFactory.getLogger(TextRequestBody.class);
 
     private String text;
 
@@ -26,6 +21,6 @@ public class TextRequestBody {
     }
 
     public String getText() {
-        return text;
+        return this.text;
     }
 }

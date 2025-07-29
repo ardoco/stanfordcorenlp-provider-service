@@ -2,26 +2,26 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.5.3</version>
-    <relativePath />
+    <groupId>io.github.ardoco</groupId>
+    <artifactId>parent</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
   </parent>
-  <groupId>io.github.ardoco</groupId>
+
   <artifactId>stanfordnlp</artifactId>
-  <version>1.1.0-SNAPSHOT</version>
 
   <name>StanfordCoreNLP-Provider-Service</name>
   <description>Microservice for Standford Core NLP</description>
-  <properties>
-    <java.version>21</java.version>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
-    <maven.compiler.release>${java.version}</maven.compiler.release>
-    <ardoco.core.version>1.0.0</ardoco.core.version>
-    <stanford-corenlp.version>4.5.10</stanford-corenlp.version>
-    <spotless.version>2.46.1</spotless.version>
-  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>3.5.4</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>com.h2database</groupId>
@@ -29,30 +29,30 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>edu.stanford.nlp</groupId>
-      <artifactId>stanford-corenlp</artifactId>
-      <version>${stanford-corenlp.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>edu.stanford.nlp</groupId>
-      <artifactId>stanford-corenlp</artifactId>
-      <version>${stanford-corenlp.version}</version>
-      <classifier>models</classifier>
-    </dependency>
-    <dependency>
       <groupId>io.github.ardoco.core</groupId>
       <artifactId>common</artifactId>
-      <version>${ardoco.core.version}</version>
+      <version>${ardoco.version}</version>
     </dependency>
     <dependency>
       <groupId>io.github.ardoco.core</groupId>
       <artifactId>text-provider-json</artifactId>
-      <version>${ardoco.core.version}</version>
+      <version>${ardoco.version}</version>
     </dependency>
     <dependency>
       <groupId>io.github.ardoco.tlr</groupId>
       <artifactId>text-preprocessing</artifactId>
-      <version>${ardoco.core.version}</version>
+      <version>${ardoco.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.httpcomponents.client5</groupId>
+          <artifactId>httpclient5</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+      <version>2.6.0</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -74,9 +74,24 @@
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers</artifactId>
-      <version>1.21.3</version>
     </dependency>
   </dependencies>
+  <repositories>
+    <repository>
+      <id>mavenCentral</id>
+      <url>https://repo1.maven.org/maven2/</url>
+    </repository>
+    <repository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>mavenSnapshot</id>
+      <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+    </repository>
+  </repositories>
 
   <build>
     <resources>
@@ -88,62 +103,28 @@
       <plugin>
         <groupId>com.diffplug.spotless</groupId>
         <artifactId>spotless-maven-plugin</artifactId>
-        <version>${spotless.version}</version>
-        <configuration>
-          <formats>
-            <format>
-              <includes>
-                <include>*.md</include>
-                <include>.gitignore</include>
-              </includes>
-              <trimTrailingWhitespace />
-              <endWithNewline />
-              <indent>
-                <tabs>true</tabs>
-                <spacesPerTab>4</spacesPerTab>
-              </indent>
-            </format>
-          </formats>
-          <!-- define a language-specific format -->
-          <java>
-            <eclipse>
-              <!--suppress UnresolvedMavenProperty -->
-              <file>${maven.multiModuleProjectDirectory}/formatter.xml</file>
-            </eclipse>
-            <removeUnusedImports />
-            <licenseHeader>
-              <!--suppress UnresolvedMavenProperty -->
-              <file>${maven.multiModuleProjectDirectory}/header.txt</file>
-            </licenseHeader>
-            <importOrder>
-              <!--suppress UnresolvedMavenProperty -->
-              <file>${maven.multiModuleProjectDirectory}/spotless.importorder</file>
-            </importOrder>
-          </java>
-          <pom>
-            <sortPom>
-              <encoding>UTF-8</encoding>
-              <keepBlankLines>true</keepBlankLines>
-              <indentBlankLines>false</indentBlankLines>
-              <nrOfIndentSpace>2</nrOfIndentSpace>
-              <expandEmptyElements>false</expandEmptyElements>
-              <spaceBeforeCloseEmptyElement>true</spaceBeforeCloseEmptyElement>
-              <sortDependencies>groupId,artifactId</sortDependencies>
-              <sortDependencyExclusions>groupId,artifactId</sortDependencyExclusions>
-              <sortDependencyManagement>groupId,artifactId</sortDependencyManagement>
-              <sortPlugins>groupId,artifactId</sortPlugins>
-              <sortProperties>false</sortProperties>
-              <sortModules>true</sortModules>
-              <sortExecutions>true</sortExecutions>
-              <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
-            </sortPom>
-          </pom>
-          <ratchetFrom>origin/main</ratchetFrom>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration combine.self="append">
+          <!-- To retain parameter names for compiled classes. See https://github.com/spring-projects/spring-framework/wiki/Upgrading-to-Spring-Framework-6.x#parameter-name-retention -->
+          <parameters>true</parameters>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>edu.kit.kastel.mcse.ardoco.stanfordnlp.StanfordCoreNlpProviderServiceApplication</mainClass>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
