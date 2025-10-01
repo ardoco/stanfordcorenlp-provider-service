@@ -5,7 +5,7 @@ COPY src src
 COPY pom.xml pom.xml
 RUN mvn -DskipTests=true clean package && rm target/*-sources.jar target/*-javadoc.jar
 
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:25-jre
 
 ENV TZ=Europe/Berlin
 ENV USERNAME="admin"
