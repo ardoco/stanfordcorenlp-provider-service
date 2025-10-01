@@ -12,7 +12,7 @@
   <name>StanfordCoreNLP-Provider-Service</name>
   <description>Microservice for Standford Core NLP</description>
   <properties>
-    <junit.version>5.12.2</junit.version>
+    <junit.version>6.0.0</junit.version>
   </properties>
 
   <dependencyManagement>
