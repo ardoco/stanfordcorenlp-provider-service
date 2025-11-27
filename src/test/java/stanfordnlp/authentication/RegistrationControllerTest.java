@@ -1,8 +1,6 @@
 /* Licensed under MIT 2023-2025. */
 package stanfordnlp.authentication;
 
-import java.nio.file.Path;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,28 +11,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.images.builder.ImageFromDockerfile;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
-@Testcontainers
-class RegistrationControllerTest {
+import stanfordnlp.StanfordTestBase;
 
-    String username = "admin";
-    String password = "changeme";
-    String registrationEndpoint = "/stanfordnlp/registration";
-    String healthEndpoint = "/stanfordnlp/health";
+class RegistrationControllerTest extends StanfordTestBase {
+
     static String address;
     static TestRestTemplate restTemplate;
-
-    @Container
-    public static GenericContainer<?> simpleWebServer = new GenericContainer<>(new ImageFromDockerfile(
-            "localhost/testcontainers/stanfordcorenlp-provider-service", true) //
-            .withFileFromPath("./src", Path.of("./src")) //
-            .withFileFromPath("./pom.xml", Path.of("./pom.xml")) //
-            .withFileFromPath("./Dockerfile", Path.of("./Dockerfile")) //
-    ).withExposedPorts(8080);
 
     @BeforeAll
     static void beforeAll() {

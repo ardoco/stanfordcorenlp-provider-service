@@ -2,7 +2,6 @@
 package stanfordnlp.corenlp;
 
 import java.io.IOException;
-import java.nio.file.Path;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
@@ -11,32 +10,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.resttestclient.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.images.builder.ImageFromDockerfile;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import edu.kit.kastel.mcse.ardoco.core.textproviderjson.converter.JsonConverter;
 import edu.kit.kastel.mcse.ardoco.core.textproviderjson.dto.TextDto;
 import edu.kit.kastel.mcse.ardoco.core.textproviderjson.error.InvalidJsonException;
+import stanfordnlp.StanfordTestBase;
 import stanfordnlp.TestUtil;
 
-@Testcontainers
-public class TextControllerTest {
+class TextControllerTest extends StanfordTestBase {
 
-    String username = "admin";
-    String password = "changeme";
-    String textEndpoint = "/stanfordnlp";
     static String address;
     static TestRestTemplate restTemplate;
-
-    @Container
-    public static GenericContainer<?> simpleWebServer = new GenericContainer<>(new ImageFromDockerfile(
-            "localhost/testcontainers/stanfordcorenlp-provider-service", true) //
-            .withFileFromPath("./src", Path.of("./src")) //
-            .withFileFromPath("./pom.xml", Path.of("./pom.xml")) //
-            .withFileFromPath("./Dockerfile", Path.of("./Dockerfile")) //
-    ).withExposedPorts(8080);
 
     @BeforeAll
     static void setUp() {
@@ -64,7 +48,5 @@ public class TextControllerTest {
         TextDto expected = JsonConverter.fromJsonString(TestUtil.getJsonExample());
         TextDto actual = JsonConverter.fromJsonString(response1.getBody());
         Assertions.assertEquals(expected, actual);
-
     }
-
 }
