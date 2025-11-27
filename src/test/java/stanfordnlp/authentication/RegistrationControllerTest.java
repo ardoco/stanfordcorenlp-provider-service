@@ -1,14 +1,13 @@
-/* Licensed under MIT 2023. */
+/* Licensed under MIT 2023-2025. */
 package stanfordnlp.authentication;
 
 import java.nio.file.Path;
 
-import org.junit.ClassRule;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.resttestclient.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.images.builder.ImageFromDockerfile;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
+@Testcontainers
 class RegistrationControllerTest {
 
     String username = "admin";
@@ -26,7 +28,7 @@ class RegistrationControllerTest {
     static String address;
     static TestRestTemplate restTemplate;
 
-    @ClassRule
+    @Container
     public static GenericContainer<?> simpleWebServer = new GenericContainer<>(new ImageFromDockerfile(
             "localhost/testcontainers/stanfordcorenlp-provider-service", true) //
             .withFileFromPath("./src", Path.of("./src")) //
@@ -37,7 +39,7 @@ class RegistrationControllerTest {
     @BeforeAll
     static void beforeAll() {
         simpleWebServer.start();
-        address = "http://" + simpleWebServer.getContainerIpAddress() + ":" + simpleWebServer.getMappedPort(8080);
+        address = "http://" + simpleWebServer.getHost() + ":" + simpleWebServer.getMappedPort(8080);
         restTemplate = new TestRestTemplate();
     }
 

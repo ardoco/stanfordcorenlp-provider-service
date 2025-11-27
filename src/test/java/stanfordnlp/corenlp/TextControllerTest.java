@@ -1,25 +1,27 @@
-/* Licensed under MIT 2023. */
+/* Licensed under MIT 2023-2025. */
 package stanfordnlp.corenlp;
 
 import java.io.IOException;
 import java.nio.file.Path;
 
-import org.junit.ClassRule;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.resttestclient.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.images.builder.ImageFromDockerfile;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import edu.kit.kastel.mcse.ardoco.core.textproviderjson.converter.JsonConverter;
 import edu.kit.kastel.mcse.ardoco.core.textproviderjson.dto.TextDto;
 import edu.kit.kastel.mcse.ardoco.core.textproviderjson.error.InvalidJsonException;
 import stanfordnlp.TestUtil;
 
+@Testcontainers
 public class TextControllerTest {
 
     String username = "admin";
@@ -28,7 +30,7 @@ public class TextControllerTest {
     static String address;
     static TestRestTemplate restTemplate;
 
-    @ClassRule
+    @Container
     public static GenericContainer<?> simpleWebServer = new GenericContainer<>(new ImageFromDockerfile(
             "localhost/testcontainers/stanfordcorenlp-provider-service", true) //
             .withFileFromPath("./src", Path.of("./src")) //
@@ -39,7 +41,7 @@ public class TextControllerTest {
     @BeforeAll
     static void setUp() {
         simpleWebServer.start();
-        address = "http://" + simpleWebServer.getContainerIpAddress() + ":" + simpleWebServer.getMappedPort(8080);
+        address = "http://" + simpleWebServer.getHost() + ":" + simpleWebServer.getMappedPort(8080);
         restTemplate = new TestRestTemplate();
     }
 
